@@ -9,7 +9,9 @@
     "name": "Allan Cerveaux",
     "url": "https://github.com/AllanCerveaux"
   },
-  "scripts": {},
+  "scripts": {
+    "start": "yarn lerna run start --stream"
+  },
   "dependencies": {
     "lerna": "^4.0.0"
   }
