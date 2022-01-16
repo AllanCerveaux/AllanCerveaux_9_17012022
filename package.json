@@ -10,7 +10,8 @@
     "url": "https://github.com/AllanCerveaux"
   },
   "scripts": {
-    "start": "yarn lerna run start --stream"
+    "start": "yarn lerna run start --stream",
+    "test": "yarn lerna run start --stream"
   },
   "dependencies": {
     "lerna": "^4.0.0"
