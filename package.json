@@ -1,0 +1,16 @@
+{
+  "name": "AllanCerveaux_9_17012022",
+  "version": "1.0.0",
+  "description": "Projet Billed, une entreprise qui produit des solutions Saas destinées aux équipes de ressources humaines",
+  "main": "index.js",
+  "license": "MIT",
+  "author": {
+    "email": "cerveauxallanjean@gmail.com",
+    "name": "Allan Cerveaux",
+    "url": "https://github.com/AllanCerveaux"
+  },
+  "scripts": {},
+  "dependencies": {
+    "lerna": "^4.0.0"
+  }
+}
