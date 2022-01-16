@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "yarn lerna run start --stream",
-    "test": "yarn lerna run start --stream"
+    "test": "yarn lerna run test --stream"
   },
   "dependencies": {
     "lerna": "^4.0.0"
