@@ -2,9 +2,10 @@
  * @jest-environment jsdom
  */
 
-import { screen } from "@testing-library/dom";
+import { fireEvent, screen } from "@testing-library/dom";
 import Router from '../app/Router';
-import { ROUTES_PATH } from '../constants/routes';
+import { ROUTES, ROUTES_PATH } from '../constants/routes';
+import Bills from '../containers/Bills';
 import { bills } from "../fixtures/bills.js";
 import BillsUI from "../views/BillsUI.js";
 import { localStorageMock } from '../__mocks__/localStorage';
@@ -37,7 +38,38 @@ describe("Given I am connected as an employee", () => {
       expect(dates).toEqual(datesSorted)
     })
 
-    
+    describe("When i click on the New Bill button", () => {
+      test("Then, it should be render New Bill Page", () => {
+        const onNavigate = (pathname) => document.body.innerHTML = ROUTES({ pathname })
+
+        Object.defineProperty(window, "localStorage", {
+          value: localStorageMock
+        })
+        window.localStorage.setItem(
+          'user',
+          JSON.stringify({
+            type: "Employee"
+          })
+        )
+
+        const html = BillsUI({ data: [] })
+        document.body.innerHTML = html
+
+        const bills = new Bills({
+          document,
+          onNavigate,
+          store: null,
+          localStorage: window.localStorage
+        })
+
+        const handleClickNewBill = jest.fn(bills.handleClickNewBill)
+        const newBillButton = screen.getByTestId("btn-new-bill")
+        newBillButton.addEventListener('click', handleClickNewBill)
+        fireEvent.click(newBillButton)
+        
+        expect(screen.getAllByText("Envoyer une note de frais")).toBeTruthy()
+      })
+    })
   })
   
   describe('When I am on Dashboard page but it is loading', () => {
