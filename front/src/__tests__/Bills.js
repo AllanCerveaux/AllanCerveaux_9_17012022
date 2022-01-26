@@ -70,6 +70,42 @@ describe("Given I am connected as an employee", () => {
         expect(screen.getAllByText("Envoyer une note de frais")).toBeTruthy()
       })
     })
+
+    describe("When i click on the icon eye", () => {
+      test("A modal should open", () => {
+        const onNavigate = (pathname) => document.body.innerHTML = ROUTES({ pathname })
+
+        Object.defineProperty(window, "localStorage", {
+          value: localStorageMock
+        })
+        window.localStorage.setItem(
+          'user',
+          JSON.stringify({
+            type: "Employee"
+          })
+        )
+
+        const html = BillsUI({ data: bills })
+        document.body.innerHTML = html
+
+        const c_bills = new Bills({
+          document,
+          onNavigate,
+          store: null,
+          localStorage: window.localStorage
+        })
+        
+        $.fn.modal = jest.fn();
+        const eye = screen.getAllByTestId('icon-eye')[0]
+        const handleClickIconEye = jest.fn(() => c_bills.handleClickIconEye(eye))
+        eye.addEventListener('click', handleClickIconEye)
+        fireEvent.click(eye)
+        expect(handleClickIconEye).toHaveBeenCalled()
+
+        const modale = document.getElementById('modaleFile')
+        expect(modale).toBeTruthy()
+      })
+    })
   })
   
   describe('When I am on Dashboard page but it is loading', () => {
