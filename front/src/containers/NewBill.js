@@ -31,6 +31,7 @@ export default class NewBill {
       const error = document.createElement('span')
       error.innerHTML = "Les extensions d'images authorisée sont JPG, JPEG, PNG."
       error.classList.add('invalid-feedback')
+      error.setAttribute('data-testid', 'error-message')
       input.parentNode.append(error)
 
       input.classList.remove('blue-border')
