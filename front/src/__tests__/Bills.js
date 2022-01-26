@@ -9,6 +9,7 @@ import Bills from '../containers/Bills';
 import { bills } from "../fixtures/bills.js";
 import BillsUI from "../views/BillsUI.js";
 import { localStorageMock } from '../__mocks__/localStorage';
+import store from '../__mocks__/store';
 
 describe("Given I am connected as an employee", () => {
   describe("When I am on Bills Page", () => {
@@ -108,7 +109,7 @@ describe("Given I am connected as an employee", () => {
     })
   })
   
-  describe('When I am on Dashboard page but it is loading', () => {
+  describe("When I am on Dashboard page but it is loading", () => {
     test("Then, loading page should be rendered", () => {
       const html = BillsUI({ loading: true })
       document.body.innerHTML = html
@@ -116,11 +117,20 @@ describe("Given I am connected as an employee", () => {
     })
   })
   
-  describe('When I am on Dashboard page but back-end send an error message', () => {
-    test('Then, Error page should be rendered', () => {
+  describe("When I am on Dashboard page but back-end send an error message", () => {
+    test("Then, Error page should be rendered", () => {
       const html = BillsUI({ error: 'some error message' })
       document.body.innerHTML = html
       expect(screen.getAllByText('Erreur')).toBeTruthy()
+    })
+  })
+
+  describe("When I navigate on BillsUI", () => {
+    test("fetches bills from mock API GET", async () => {
+      const getSpy = jest.spyOn(store, "get")
+      const bills = await store.get()
+      expect(getSpy).toHaveBeenCalledTimes(1)
+      expect(bills.data.length).toBe(4)
     })
   })
 })
