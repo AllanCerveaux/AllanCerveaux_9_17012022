@@ -142,5 +142,15 @@ describe("Given I am connected as an employee", () => {
       const message = await screen.getByText(/Erreur 404/)
       expect(message).toBeTruthy()
     })
+
+    test("fetches messages from an API and fails with 500 message error", async () => {
+      store.get.mockImplementationOnce(() => {
+        Promise.reject(new Error("Erreur 500"))
+      })
+      const html = BillsUI({ error: "Erreur 500" })
+      document.body.innerHTML = html
+      const message = await screen.getByText(/Erreur 500/)
+      expect(message).toBeTruthy()
+    })
   })
 })
