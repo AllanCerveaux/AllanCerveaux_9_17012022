@@ -132,5 +132,15 @@ describe("Given I am connected as an employee", () => {
       expect(getSpy).toHaveBeenCalledTimes(1)
       expect(bills.data.length).toBe(4)
     })
+    
+    test("fetches bills from an API and fails with 404 message error", async () => {
+      store.get.mockImplementationOnce(() => {
+        Promise.reject(new Error("Erreur 404"))
+      })
+      const html = BillsUI({ error: "Erreur 404" })
+      document.body.innerHTML = html
+      const message = await screen.getByText(/Erreur 404/)
+      expect(message).toBeTruthy()
+    })
   })
 })
