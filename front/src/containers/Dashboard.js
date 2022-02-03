@@ -1,8 +1,8 @@
 import { formatDate } from '../app/format.js'
-import DashboardFormUI from '../views/DashboardFormUI.js'
 import BigBilledIcon from '../assets/svg/big_billed.js'
 import { ROUTES_PATH } from '../constants/routes.js'
 import USERS_TEST from '../constants/usersTest.js'
+import DashboardFormUI from '../views/DashboardFormUI.js'
 import Logout from "./Logout.js"
 
 export const filteredBills = (data, status) => {
@@ -145,7 +145,9 @@ export default class {
     }
 
     bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      $(`#open-bill${bill.id}`)
+        .unbind("click")
+        .click((e) => this.handleEditTicket(e, bill, bills))
     })
 
     return bills

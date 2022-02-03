@@ -2,7 +2,8 @@
   "scripts": {
     "prestart": "yarn",
     "start": "live-server",
-    "test": "jest --coverage --noStackTrace --silent"
+    "test": "jest --coverage --noStackTrace --silent",
+    "test:watch": "jest --coverage --watch"
   },
   "jest": {
     "verbose": false,
