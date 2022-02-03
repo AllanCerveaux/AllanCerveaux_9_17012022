@@ -145,7 +145,7 @@ describe("Given I am connected as an employee", () => {
         expect(error).toBeTruthy()
         expect(inputFile.classList.contains('is-invalid')).toBeTruthy()
       })
-      test("Test", async () => {
+      test("Replace wrong file", async () => {
         const onNavigate = (pathname) => document.body.innerHTML = ROUTES({ pathname })
 
         Object.defineProperty(window, "localStorage", {

@@ -3,7 +3,7 @@
     "prestart": "yarn",
     "start": "live-server",
     "test": "jest --coverage --noStackTrace --silent",
-    "test:watch": "jest --coverage --noStackTrace --watch"
+    "test:watch": "jest --coverage --watch"
   },
   "jest": {
     "verbose": false,
