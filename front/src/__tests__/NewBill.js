@@ -3,6 +3,7 @@
  */
 
 import { fireEvent, screen } from "@testing-library/dom"
+import Store from "../app/Store"
 import { ROUTES } from '../constants/routes'
 import NewBill from '../containers/NewBill'
 import BillsUI from '../views/BillsUI'
@@ -126,7 +127,7 @@ describe("Given I am connected as an employee", () => {
         )
         
         document.body.innerHTML = NewBillUI()
-
+        
         const newBill = new NewBill({
           document,
           onNavigate,
@@ -143,6 +144,48 @@ describe("Given I am connected as an employee", () => {
         const error = screen.getByTestId('error-message')
         expect(error).toBeTruthy()
         expect(inputFile.classList.contains('is-invalid')).toBeTruthy()
+      })
+      test("Test", async () => {
+        const onNavigate = (pathname) => document.body.innerHTML = ROUTES({ pathname })
+
+        Object.defineProperty(window, "localStorage", {
+          value: localStorageMock
+        })
+        window.localStorage.setItem(
+          'user',
+          JSON.stringify({
+            type: "Employee"
+          })
+        )
+        
+        document.body.innerHTML = NewBillUI()
+
+        const newBill = new NewBill({
+          document,
+          onNavigate,
+          store: Store,
+          localStorage: window.localStorage
+        })
+
+        const inputFile = screen.getByTestId('file')
+        
+        const error = document.createElement('span')
+        error.innerHTML = "Les extensions d'images authorisée sont JPG, JPEG, PNG."
+        error.classList.add('invalid-feedback')
+        error.setAttribute('data-testid', 'error-message')
+        inputFile.parentNode.append(error)
+  
+        inputFile.classList.remove('blue-border')
+        inputFile.classList.add('is-invalid')
+
+        fireEvent.change(inputFile, {
+          target: {
+            files: [new File(['image.jpeg'], 'image.jpeg', {type: 'image/jpeg'})]
+          }
+        })
+
+        expect(inputFile.classList.contains('is-invalid')).toBeFalsy()
+        expect(inputFile.classList.contains('blue-border')).toBeTruthy()
       })
     })
 
